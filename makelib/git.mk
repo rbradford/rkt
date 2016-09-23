@@ -46,7 +46,7 @@ $(_GCL_FULL_PATH_): | $(GCL_DIRECTORY)
 	fi; \
 	if [ "$${saved_committish}" != "$(GCL_COMMITTISH)" ]; then \
 		$(call vb,vt,GIT CLONE,$(GCL_REPOSITORY) ($(GCL_COMMITTISH)) => $(call vsp,$(GCL_DIRECTORY))) \
-		$(_GCL_GIT_) fetch $(call vl3,--quiet) --depth=1 origin $(GCL_COMMITTISH); \
+		$(_GCL_GIT_) fetch $(call vl3,--quiet) origin $(GCL_COMMITTISH); \
 		$(_GCL_GIT_) config rkt.committish "$(GCL_COMMITTISH)"; \
 		$(_GCL_GIT_) config rkt.fetch-head $$($(_GCL_GIT_) rev-parse FETCH_HEAD); \
 	fi; \
