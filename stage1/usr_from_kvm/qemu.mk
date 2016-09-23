@@ -13,7 +13,7 @@ QEMU_CONFIGURATION_OPTS := --disable-bsd-user --disable-docs --disable-guest-age
     --disable-seccomp --disable-curl --disable-bluez --disable-cap-ng --disable-rbd --disable-libiscsi \
     --disable-libnfs --disable-smartcard --disable-libusb --disable-glusterfs --disable-archipelago --disable-vhdx \
     --disable-tcmalloc --disable-jemalloc --disable-debug-info --static --enable-virtfs --target-list=x86_64-softmmu \
-    --python=/usr/bin/python2 --disable-werror
+    --python=/usr/bin/python2 --disable-werror --disable-opengl --disable-usb-redir
 QEMU_ACI_BINARY := $(HV_ACIROOTFSDIR)/qemu
 
 # Using 2.6.0 stable release from official repository
