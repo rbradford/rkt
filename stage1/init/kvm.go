@@ -39,7 +39,7 @@ import (
 const journalDir = "/var/log/journal"
 
 // Supported hypervisors
-var hypervisors = [...]string{"lkvm", "qemu"}
+var hypervisors = [...]string{"lkvm", "qemu", "qemu-lite"}
 
 // KvmNetworkingToSystemd generates systemd unit files for a pod according to network configuration
 func KvmNetworkingToSystemd(p *stage1commontypes.Pod, n *networking.Networking) error {

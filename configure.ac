@@ -118,7 +118,7 @@ AC_ARG_WITH([stage1-systemd-version],
 # STAGE1 - kvm hypervisor. lkvm or/and qemu can be chosen
 AC_ARG_WITH([stage1-kvm-hypervisors],
             [AS_HELP_STRING([--with-stage1-kvm-hypervisors],
-                            [select hypervisors for kvm flavor; build stage1 aci for each of them. select "lkvm", "qemu" or both (default: 'lkvm')])],
+                            [select hypervisors for kvm flavor; build stage1 aci for each of them. select "lkvm", "qemu", "qemu-lite" or all (default: 'lkvm')])],
             [RKT_STAGE1_KVM_HV="${withval}"],
             [RKT_STAGE1_KVM_HV='lkvm'])
 
@@ -256,7 +256,7 @@ dnl a list of all flavors
 RKT_STAGE1_ALL_FLAVORS=coreos,kvm,host,src,fly
 
 dnl a list of all kvm hypervisors
-RKT_STAGE1_KVM_ALL_HV=lkvm,qemu
+RKT_STAGE1_KVM_ALL_HV=lkvm,qemu,qemu-lite
 
 dnl RKT_IS_VALID_FLAVOR checks if $1 is a valid flavor, $2 is an
 dnl additional string to an error message.
@@ -273,7 +273,7 @@ dnl additional string to an error message.
 AC_DEFUN([RKT_IS_VALID_HYPERVISOR],
          [AS_CASE([$1],
                   dnl Correct hypervisor, nothing to do.
-                  [lkvm|qemu],
+                  [lkvm|qemu|qemu-lite],
                           [],
                   dnl Bogus hypervisor, bail out.
                   [AC_MSG_ERROR([*** Unknown stage1 kvm hypervisor "$1" $2])])])
@@ -444,6 +444,8 @@ RKT_IF_HAS_VALUE([${RKT_STAGE1_FLAVORS}],[kvm],
                                                     [AC_MSG_NOTICE([including lkvm...])],
                                           [qemu],
                                                     [AC_MSG_NOTICE([including qemu...])],
+                                          [qemu-lite],
+                                                    [AC_MSG_NOTICE([including qemu-lite...])],
                                           [AC_MSG_ERROR([*** Unhandled hypervisor "${hypervisor}". should not happen])])])])
 
 ## Options specific to coreos/kvm flavors

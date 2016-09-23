@@ -53,6 +53,7 @@ import (
 	"github.com/coreos/rkt/stage1/init/kvm"
 	"github.com/coreos/rkt/stage1/init/kvm/hypervisor/hvlkvm"
 	"github.com/coreos/rkt/stage1/init/kvm/hypervisor/hvqemu"
+	"github.com/coreos/rkt/stage1/init/kvm/hypervisor/hvqemu_lite"
 )
 
 const (
@@ -270,7 +271,6 @@ func getArgsEnv(p *stage1commontypes.Pod, flavor string, canMachinedRegister boo
 		// kernel and hypervisor binaries are located relative to the working directory
 		// of init (/var/lib/rkt/..../uuid)
 		// TODO: move to path.go
-		kernelPath := filepath.Join(common.Stage1RootfsPath(p.Root), "bzImage")
 		netDescriptions := kvm.GetNetworkDescriptions(n)
 
 		cpu, mem := kvm.GetAppsResources(p.Manifest.Apps)
@@ -283,14 +283,19 @@ func getArgsEnv(p *stage1commontypes.Pod, flavor string, canMachinedRegister boo
 
 		// Set start command for hypervisor
 		StartCmd := hvlkvm.StartCmd
+		kernel_name := "bzImage"
 		switch hv {
 		case "lkvm":
 			StartCmd = hvlkvm.StartCmd
 		case "qemu":
 			StartCmd = hvqemu.StartCmd
+		case "qemu-lite":
+			StartCmd = hvqemu_lite.StartCmd
+			kernel_name = "vmlinux"
 		default:
-			return nil, nil, fmt.Errorf("unrecognized hypervisor")
+			return nil, nil, fmt.Errorf("unrecognized hypervisor: %s", hv)
 		}
+		kernelPath := filepath.Join(common.Stage1RootfsPath(p.Root), kernel_name)
 
 		hvStartCmd := StartCmd(
 			common.Stage1RootfsPath(p.Root),
