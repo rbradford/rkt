@@ -18,7 +18,7 @@ QEMU_LITE_CONFIGURATION_OPTS := --disable-bluez --disable-brlapi \
     --disable-tools --disable-tpm --disable-usb-redir --disable-uuid --disable-vnc \
     --disable-vnc-jpeg --disable-vnc-png --disable-vnc-sasl --disable-vte \
     --disable-xen --enable-attr --enable-cap-ng --enable-kvm --enable-virtfs \
-    --target-list=x86_64-softmmu
+    --target-list=x86_64-softmmu --static --disable-smartcard
 QEMU_LITE_ACI_BINARY := $(HV_ACIROOTFSDIR)/qemu-lite
 
 QEMU_LITE_GIT := https://github.com/01org/qemu-lite.git
